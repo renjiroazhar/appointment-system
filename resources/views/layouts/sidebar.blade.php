@@ -20,7 +20,7 @@
         </div>
 
         <!-- Sidebar Menu -->
-        @if (isset($dokter) && $dokter->id)
+        @if (!auth()->check() && isset($dokter) && $dokter->id)
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
@@ -68,6 +68,30 @@
                             <i class="nav-icon fa fa-th-list"></i>
                             <p>
                                 Dashboard
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('dokter') }}" class="nav-link">
+                            <i class="nav-icon fa fa-user-md"></i>
+                            <p>
+                                Dokter
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('pasien') }}" class="nav-link">
+                            <i class="nav-icon fa fa-user"></i>
+                            <p>
+                                Pasien
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('poli') }}" class="nav-link">
+                            <i class="nav-icon fa fa-hospital"></i>
+                            <p>
+                                Poli
                             </p>
                         </a>
                     </li>

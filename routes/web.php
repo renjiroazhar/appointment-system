@@ -34,6 +34,19 @@ Route::get('/dokter/login', [LoginController::class, 'indexDokter'])->name('dokt
 Route::post('/dokter/login', [LoginController::class, 'authenticateDokter']);
 Route::post('/dokter/logout', [LoginController::class, 'logoutDokter']);
 
+Route::get('/pasien/register', [PasienRegistrationController::class, 'register'])->name('pasien.register');
+Route::post('/pasien/register', [PasienRegistrationController::class, 'registerPasien']);
+Route::get('/pasien/login', [PasienRegistrationController::class, 'login'])->name('pasien.login');
+Route::post('/pasien/login', [PasienRegistrationController::class, 'loginPasien']);
+Route::get('/pasien/logout', [PasienRegistrationController::class, 'logout'])->name('pasien.logout');
+
+Route::middleware(['pasien.auth'])->group(function () {
+    Route::get('/pasien/daftar-poli', [DaftarPoliController::class, 'index'])->name('pasien.daftarpoli');
+    Route::post('/pasien/daftar-poli', [DaftarPoliController::class, 'store'])->name('pasien.daftarpoli.store');
+    Route::get('/getJadwals', [DaftarPoliController::class, 'getJadwals'])->name('getJadwals');
+    Route::get('/pasien/selesai/{id}', [DaftarPoliController::class, 'selesai'])->name('pasien.selesai');
+});
+
 
 Route::middleware(['dokter.auth'])->group(function () {
     // Dokter
@@ -46,11 +59,28 @@ Route::middleware(['dokter.auth'])->group(function () {
     Route::post('/dokter/edit-periksa/{id}', [PeriksaController::class, 'updatePeriksa'])->name('editperiksa.update');
 
     Route::get('/dokter/riwayat-pasien', [DetailPeriksaController::class, 'index'])->name('riwayatpasien');
+    Route::get('/dokter/profil', [ProfileController::class, 'index'])->name('profil');
+    Route::post('/dokter/profil/{id}', [ProfileController::class, 'update'])->name('profil.update');
 });
 
 Route::middleware(['auth'])->group(function () {
     // Admin
     Route::get('/admin', [HomeController::class, 'admin'])->name('admin.dashboard');
+
+    Route::get('/admin/dokter', [DokterController::class, 'index'])->name('dokter');
+    Route::post('/admin/dokter', [DokterController::class, 'store'])->name('dokter.store');
+    Route::delete('/admin/dokter/{id}', [DokterController::class, 'destroy'])->name('dokter.destroy');
+    Route::post('/admin/dokter/{id}', [DokterController::class, 'update'])->name('dokter.update');
+
+    Route::get('/admin/pasien', [PasienController::class, 'index'])->name('pasien');
+    Route::post('/admin/pasien', [PasienController::class, 'store'])->name('pasien.store');
+    Route::delete('/admin/pasien/{id}', [PasienController::class, 'destroy'])->name('pasien.destroy');
+    Route::post('/admin/pasien/{id}', [PasienController::class, 'update'])->name('pasien.update');
+
+    Route::get('/admin/poli', [PoliController::class, 'index'])->name('poli');
+    Route::post('/admin/poli', [PoliController::class, 'store'])->name('poli.store');
+    Route::delete('/admin/poli/{id}', [PoliController::class, 'destroy'])->name('poli.destroy');
+    Route::post('/admin/poli/{id}', [PoliController::class, 'update'])->name('poli.update');
 
     Route::get('/admin/obat', [ObatController::class, 'index'])->name('obat');
     Route::post('/admin/obat', [ObatController::class, 'store'])->name('obat.store');
