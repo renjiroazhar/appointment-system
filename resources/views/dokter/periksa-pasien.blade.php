@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form id="editForm"
-                                            action="{{ route('memeriksapasien.update', ['id' => $daftarPoli->id]) }}"
+                                            action="{{ route('periksapasien.update', ['id' => $daftarPoli->id]) }}"
                                             method="POST">
                                             @csrf
                                             <div class="form-group">

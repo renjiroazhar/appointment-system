@@ -16,16 +16,9 @@ class Authenticate extends Middleware
     {
         if (!$request->expectsJson()) {
             if ($request->is('admin') || $request->is('admin/*')) {
-                // Check user
-                $user = Auth::user();
-
-                if (Auth::check()) {
-                    if ($user->username) {
-                        return route('admin.login');
-                    } else {
-                        return route('dokter.login');
-                    }
-                }
+                return route('admin.login');
+            } else {
+                return route('dokter.login');
             }
         }
     }

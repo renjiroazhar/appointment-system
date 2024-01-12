@@ -91,19 +91,20 @@
                                                     @foreach ($groupedDetailPeriksas as $detailPeriksa)
                                                         {{ $detailPeriksa->obat->nama_obat }}
                                                         ({{ $detailPeriksa->obat->kemasan }})
-                                                        - Rp. {{ $detailPeriksa->obat->harga }}
+                                                        - Rp. {{ $detailPeriksa->obat->harga }} x {{ ($groupedDetailPeriksas[0]->periksa->biaya - 150000) / $detailPeriksa->obat->harga }} = Rp {{ $groupedDetailPeriksas[0]->periksa->biaya - 150000 }}
                                                         @if (!$loop->last)
                                                             <br>
                                                         @endif
                                                     @endforeach
+                                                    <br>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Jasa</label>
-                                                <input type="text" class="form-control" readonly required value="150000">
+                                                <input type="text" class="form-control" readonly required value="Rp 150000">
                                             </div>
                                             <div class="form-group">
-                                                <label>Total Biaya (Jasa + Obat)</label>
+                                                <label>Total Biaya (Obat + Jasa)</label>
                                                 <input type="text" class="form-control" readonly required
                                                     value="Rp {{ $groupedDetailPeriksas[0]->periksa->biaya }}">
                                             </div>

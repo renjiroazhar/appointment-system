@@ -20,14 +20,16 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                // Check user
-                $user = Auth::user();
-                if ($user->username) {
-                    return redirect('/admin');
-                } else {
-                    return redirect('/dokter');
+        if (session('no_hp')) {
+            return redirect('/dokter');
+        } else {
+            foreach ($guards as $guard) {
+                if (Auth::guard($guard)->check() ) {
+                    $user = Auth::user();
+                    
+                    if ($user->username) {
+                        return redirect('/admin');
+                    }
                 }
             }
         }

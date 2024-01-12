@@ -57,12 +57,12 @@
                         <input type="text" name="username" class="input100" id="username" placeholder="Masukkan username"
                             required>
                     </div>
-                    <span>Password</span>
-                    <div class="wrap-input100 validate-input m-b-12 mt-2" data-validate = "Password wajib diisi">
+                    <span>Kata Sandi</span>
+                    <div class="wrap-input100 validate-input m-b-12 mt-2" data-validate = "Kata sandi wajib diisi">
                         <span class="btn-show-pass">
                             <i class="fa fa-eye"></i>
                         </span>
-                        <input type="password" name="password" class="input100" id="password" placeholder="Masukkan password"
+                        <input type="password" name="password" class="input100" id="password" placeholder="Masukkan kata sandi"
                             required>
                     </div>
                     <div>

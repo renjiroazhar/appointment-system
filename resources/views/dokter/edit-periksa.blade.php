@@ -48,14 +48,14 @@
                             <label for="obat" class="form-label">Obat</label>
                             <div id="selectedObats" class="border overflow-auto p-2" style="height: 100px;"></div>
                             <hr>
-                            <h5>Total Harga: <span id="totalHarga">0</span></h5>
+                            <h3>Total Harga: <span id="totalHarga">0</span> + 150000</h3>
                         </div>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#obatModal">
+                        <button type="button" class="btn btn-warning mt-5" data-toggle="modal" data-target="#obatModal">
                             Tambah Obat
                         </button>
 
                         <!-- Tombol Simpan -->
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary mt-5">
                             <i class="fas fa-save"></i> Simpan
                         </button>
                     </form>

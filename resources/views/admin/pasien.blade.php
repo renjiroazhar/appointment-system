@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="no_rm">No RM</label>
-                                <input required type="text" name="no_rm" class="form-control"
+                                <input required disabled type="text" name="no_rm" class="form-control"
                                     value="{{ $no_rm }}" id="no_rm" placeholder="No RM">
                                 @error('no_rm')
                                     {{ $message }}
@@ -161,7 +161,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="no_rm">No RM</label>
-                                <input required type="text" name="no_rm" value="{{ $pasien->no_rm }}"
+                                <input required disabled type="text" name="no_rm" value="{{ $pasien->no_rm }}"
                                     class="form-control" value="{{ $pasien->no_rm }}" id="no_rm"
                                     placeholder="No RM">
                                 @error('no_rm')

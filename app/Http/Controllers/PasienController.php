@@ -17,17 +17,13 @@ class PasienController extends Controller
     {
         $pasiens = Pasien::all();
     
-        // Generate the new norm
-        $dateCode = Carbon::now()->format('Ym'); // '202401' for January 2024
+        $dateCode = Carbon::now()->format('ym');
         $lastPatient = Pasien::whereYear('created_at', Carbon::now()->year)
             ->whereMonth('created_at', Carbon::now()->month)
             ->count();
     
-        // Format the patient count with leading zeros
         $formattedLastPatient = str_pad($lastPatient + 1, 3, '0', STR_PAD_LEFT);
-    
         $no_rm = $dateCode . '-' . $formattedLastPatient;
-        // $no_rm would be '202401-001' for the new patient
     
         return view('admin.pasien', compact('pasiens', 'no_rm'));
     }

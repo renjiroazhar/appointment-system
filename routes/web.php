@@ -52,8 +52,13 @@ Route::middleware(['dokter.auth'])->group(function () {
     // Dokter
     Route::get('/dokter', [HomeController::class, 'dokter'])->name('dokter.dashboard');
 
-    Route::get('/dokter/periksa-pasien', [PeriksaController::class, 'index'])->name('memeriksapasien');
-    Route::post('/dokter/periksa-pasien/{id}', [PeriksaController::class, 'update'])->name('memeriksapasien.update');
+    Route::get('/dokter/jadwal-praktik', [JadwalController::class, 'index'])->name('jadwalpraktik');
+    Route::post('/dokter/jadwal-praktik', [JadwalController::class, 'store'])->name('jadwalpraktik.store');
+    Route::delete('/dokter/jadwal-praktik/{id}', [JadwalController::class, 'destroy'])->name('jadwalpraktik.destroy');
+    Route::post('/dokter/jadwal-praktik/{id}', [JadwalController::class, 'update'])->name('jadwalpraktik.update');
+
+    Route::get('/dokter/periksa-pasien', [PeriksaController::class, 'index'])->name('periksapasien');
+    Route::post('/dokter/periksa-pasien/{id}', [PeriksaController::class, 'update'])->name('periksapasien.update');
 
     Route::get('/dokter/edit-periksa/{id}', [PeriksaController::class, 'edit'])->name('editperiksa');
     Route::post('/dokter/edit-periksa/{id}', [PeriksaController::class, 'updatePeriksa'])->name('editperiksa.update');

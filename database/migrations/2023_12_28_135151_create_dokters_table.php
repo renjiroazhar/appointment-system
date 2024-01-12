@@ -18,6 +18,7 @@ class CreateDoktersTable extends Migration
             $table->string('nama');
             $table->string('alamat');
             $table->string('no_hp')->unique();
+            $table->string('password');
             $table->foreignId('id_poli')->constrained('polis')->onDelete('cascade');
             $table->timestamps();
         });

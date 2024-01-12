@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Dokter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 
@@ -28,14 +29,11 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-
             if (Auth::check()) {
                 $request->session()->regenerate();
 
                 return redirect()->intended('/admin');
             } else {
-                // Logout the user if they have the wrong role
                 Auth::logout();
 
                 return back()->with('loginError', 'User tidak ditemukan');
@@ -49,11 +47,12 @@ class LoginController extends Controller
     {
         $credentials = $request->validate([
             'no_hp' => 'required',
+            'password' => 'required'
         ]);
 
         $dokter = Dokter::where('no_hp', $credentials['no_hp'])->first();
 
-        if ($dokter) {
+        if ($dokter && password_verify($credentials['password'], $dokter->password)) {
             $request->session()->put('no_hp', $credentials['no_hp']);
             $request->session()->regenerate();
 

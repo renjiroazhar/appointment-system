@@ -68,10 +68,13 @@ class PeriksaController extends Controller
      */
     public function edit($id)
     {
+        $dokterNoHp = session('no_hp');
+        $dokter = Dokter::where('no_hp', $dokterNoHp)->first();
+
         $daftarPoli = DaftarPoli::find($id);
         $obats = Obat::all();
 
-        return view('dokter.edit-periksa', compact('daftarPoli', 'obats'));
+        return view('dokter.edit-periksa', compact('daftarPoli', 'obats', 'dokter'));
     }
 
     public function updatePeriksa(Request $request, $id)
@@ -104,16 +107,20 @@ class PeriksaController extends Controller
         ]);
         $periksa->save();
 
+        $dokterNoHp = session('no_hp');
+        $dokter = Dokter::where('no_hp', $dokterNoHp)->first();
+
         $obatIds = json_decode($request->obat_ids);
         foreach ($obatIds as $obatId) {
             $detailPeriksa = DetailPeriksa::create([
+                'id_dokter' => $dokter->id,
                 'id_periksa' => $periksa->id,
                 'id_obat' => $obatId,
             ]);
             $detailPeriksa->save();
         }
 
-        return redirect()->route('memeriksapasien')->with('success', 'Data Periksa Berhasil Ditambahkan');
+        return redirect()->route('periksapasien')->with('success', 'Data Periksa Berhasil Ditambahkan');
     }
 
     /**
@@ -140,7 +147,7 @@ class PeriksaController extends Controller
             'nama' => $request->nama,
             'keluhan' => $request->keluhan,
         ]);
-        return redirect()->route('memeriksapasien')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('periksapasien')->with('success', 'Data berhasil diperbarui');
     }
 
     /**

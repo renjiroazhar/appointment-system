@@ -33,7 +33,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('memeriksapasien') }}" class="nav-link">
+                        <a href="{{ route('jadwalpraktik') }}" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-alt"></i>
+                            <p>
+                                Jadwal Praktik
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('periksapasien') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-alt"></i>
                             <p>
                                 Periksa Pasien
