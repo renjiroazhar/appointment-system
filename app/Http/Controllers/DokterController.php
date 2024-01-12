@@ -39,17 +39,18 @@ class DokterController extends Controller
     public function store(Request $request)
     {
         $request->validate(
-
             [
                 'nama' => 'required',
                 'alamat' => 'required',
                 'no_hp' => 'required',
+                'password' => 'required',
                 'id_poli' => 'required',
             ],
             [
                 'nama.required' => 'Nama tidak boleh kosong',
                 'alamat.required' => 'Alamat tidak boleh kosong',
                 'no_hp.required' => 'No HP tidak boleh kosong',
+                'password.required' => 'Kata sandi tidak boleh kosong',
                 'id_poli.required' => 'Poli tidak boleh kosong',
             ]
         );
@@ -59,6 +60,7 @@ class DokterController extends Controller
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
+            'password' => bcrypt($request->password),
             'id_poli' => $poli->id,
         ]);
         $dokter->poli()->associate($poli);
@@ -99,17 +101,18 @@ class DokterController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate(
-
             [
                 'nama' => 'required',
                 'alamat' => 'required',
                 'no_hp' => 'required',
+                'password' => 'required',
                 'id_poli' => 'required',
             ],
             [
                 'nama.required' => 'Nama tidak boleh kosong',
                 'alamat.required' => 'Alamat tidak boleh kosong',
                 'no_hp.required' => 'No HP tidak boleh kosong',
+                'password.required' => 'Kata sandi tidak boleh kosong',
                 'id_poli.required' => 'Poli tidak boleh kosong',
             ]
         );
@@ -120,6 +123,7 @@ class DokterController extends Controller
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
+            'password' => bcrypt($request->password),
             'id_poli' => $poli->id,
         ]);
 

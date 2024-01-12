@@ -39,6 +39,14 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="password">Kata Sandi</label>
+                                <input required type="password" name="password" class="form-control" id="password"
+                                    placeholder="Password">
+                                @error('password')
+                                    {{ $message }}
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label>Poli</label>
                                 <select name="id_poli" class="form-control">
                                     @foreach ($polis as $poli)
@@ -68,6 +76,7 @@
                                         <th>Nama</th>
                                         <th>Alamat</th>
                                         <th>No. HP</th>
+                                        <th>Password</th>
                                         <th>Poli</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -79,6 +88,7 @@
                                             <td>{{ $dokter->nama }}</td>
                                             <td>{{ $dokter->alamat }}</td>
                                             <td>{{ $dokter->no_hp }}</td>
+                                            <td>*****</td>
                                             <td>{{ $dokter->poli->nama_poli }}</td>
                                             <td>
                                                 <button data-toggle="modal" data-target="#editModal{{ $dokter->id }}"
@@ -138,6 +148,14 @@
                                 <input required type="text" name="no_hp" value="{{ $dokter->no_hp }}"
                                     class="form-control" id="nama" placeholder="No HP">
                                 @error('no_hp')
+                                    {{ $message }}
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Kata Sandi</label>
+                                <input required type="password" name="password" value=""
+                                    class="form-control" id="password" placeholder="Kata Sandi">
+                                @error('password')
                                     {{ $message }}
                                 @enderror
                             </div>
