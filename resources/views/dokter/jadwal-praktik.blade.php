@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Daftar Jadwal Praktik</h3>
-                    <button class="btn btn-primary float-right" data-toggle="modal" data-target="#tambahModal">
+                    <button @if ($jadwal) disabled @endif class="btn btn-primary float-right" data-toggle="modal" data-target="#tambahModal">
                         <i class="fas fa-plus"></i> Tambah
                     </button>
                 </div>
@@ -40,8 +40,8 @@
                             <tbody>
                                 <tr>
                                     <td>{{ $jadwal->hari }}</td>
-                                    <td>{{ $jadwal->jam_mulai }}</td>
-                                    <td>{{ $jadwal->jam_selesai }}</td>
+                                    <td>{{ date('H:i', strtotime($jadwal->jam_mulai)) }}</td>
+                                    <td>{{ date('H:i', strtotime($jadwal->jam_selesai)) }}</td>
                                     <td>
                                         <button class="btn btn-primary" data-toggle="modal"
                                             data-target="#editModal{{ $jadwal->id }}">
@@ -72,7 +72,7 @@
                                 <div class="modal-body">
                                     <form action="{{ route('jadwalpraktik.store') }}" method="POST">
                                         @csrf
-                                        <input type="hidden" id="id_dokter" name="id_dokter" value="{{ $dokter->id }}">
+                                        <input required type="hidden" id="id_dokter" name="id_dokter" value="{{ $dokter->id }}">
                                         <div class="form-group">
                                             <label for="hari">Hari</label>
                                             <select class="form-control" id="hari" name="hari" required>
@@ -120,7 +120,7 @@
                                             action="{{ route('jadwalpraktik.update', ['id' => $jadwal->id]) }}"
                                             method="POST">
                                             @csrf
-                                            <input type="hidden" id="id_dokter" name="id_dokter" value="{{ $dokter->id }}">
+                                            <input required type="hidden" id="id_dokter" name="id_dokter" value="{{ $dokter->id }}">
                                             <div class="form-group">
                                                 <label for="hari">Hari</label>
                                                 <select class="form-control" id="hari" name="hari" required>
@@ -139,21 +139,21 @@
                                             <div class="form-group">
                                                 <label for="jam_mulai">Jam Mulai</label>
                                                 <input type="time" class="form-control" id="jam_mulai"
-                                                    name="jam_mulai" value="{{ $jadwal->jam_mulai }}" required>
+                                                    name="jam_mulai" value="{{ date('H:i', strtotime($jadwal->jam_mulai)) }}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="jam_selesai">Jam Selesai</label>
                                                 <input type="time" class="form-control" id="jam_selesai"
-                                                    name="jam_selesai" value="{{ $jadwal->jam_selesai }}" required>
+                                                    name="jam_selesai" value="{{ date('H:i', strtotime($jadwal->jam_selesai)) }}" required>
                                             </div>
+                                        </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-primary">Simpan
+                                        <button type="submit" form="editForm" class="btn btn-primary">Simpan
                                             Perubahan</button>
                                     </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>

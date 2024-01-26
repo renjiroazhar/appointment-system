@@ -17,7 +17,7 @@ class PasienController extends Controller
     {
         $pasiens = Pasien::all();
     
-        $dateCode = Carbon::now()->format('ym');
+        $dateCode = Carbon::now()->format('Ym');
         $lastPatient = Pasien::whereYear('created_at', Carbon::now()->year)
             ->whereMonth('created_at', Carbon::now()->month)
             ->count();

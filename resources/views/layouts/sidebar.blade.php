@@ -17,6 +17,12 @@
             <div class="info text-white">
                 {{ auth()->user()->nama_pengguna ?? $dokter->nama }}
             </div>
+            @if (!auth()->check() && isset($dokter) && $dokter->id)
+            &nbsp;
+            <a href="{{ route('profil') }}" class="text-primary" style="font-size: 14px">
+                <i class="ion-edit"></i> Ubah
+            </a>
+            @endif
         </div>
 
         <!-- Sidebar Menu -->

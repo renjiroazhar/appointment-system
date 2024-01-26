@@ -6,6 +6,7 @@ use App\Models\Dokter;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class JadwalController extends Controller
 {
@@ -46,10 +47,14 @@ class JadwalController extends Controller
 
         $dokter = Dokter::where('no_hp', $dokterNoHp)->first();
         
-        $startTime = $request->jam_mulai;
-        $endTime = $request->jam_selesai;
+        $startTime = Carbon::parse($request->jam_mulai)->format('H:i:s');
+        $endTime = Carbon::parse($request->jam_selesai)->format('H:i:s');
         $dokterId = $request->id_dokter;
         $hari = $request->hari;
+
+        if (strtotime($startTime) > strtotime($endTime)) {
+            return redirect()->route('jadwalpraktik')->with('failed', 'Jam mulai tidak bisa lebih kecil dari jam selesai.');
+        };
 
         $request->validate([
             'id_dokter' => 'required',
@@ -65,12 +70,6 @@ class JadwalController extends Controller
             'jam_selesai.date_format' => 'Format Jam Selesai tidak valid',
             'jam_selesai.after' => 'Jam Selesai harus setelah Jam Mulai',
         ]);
-
-        $jadwalPerWeekCount = Jadwal::where('id_dokter', $dokterId)->count();
-
-        if ($jadwalPerWeekCount > 0) {
-            return redirect()->route('jadwalpraktik')->with('failed', 'Dokter hanya dapat memiliki satu jadwal per minggu.');
-        }
 
         $overlapCount = Jadwal::where(function ($query) use ($startTime, $endTime, $dokterId, $hari, $dokter) {
             $query->where('id_dokter', '!=', $dokterId)
@@ -139,10 +138,14 @@ class JadwalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $startTime = $request->jam_mulai;
-        $endTime = $request->jam_selesai;
+        $startTime = Carbon::parse($request->jam_mulai)->format('H:i:s');
+        $endTime = Carbon::parse($request->jam_selesai)->format('H:i:s');
         $dokterId = $request->id_dokter;
         $hari = $request->hari;
+
+        if (strtotime($startTime) > strtotime($endTime)) {
+            return redirect()->route('jadwalpraktik')->with('failed', 'Jam mulai tidak bisa lebih kecil dari jam selesai.');
+        };
 
         $request->validate([
             'id_dokter' => 'required',
@@ -158,12 +161,6 @@ class JadwalController extends Controller
             'jam_selesai.date_format' => 'Format Jam Selesai tidak valid',
             'jam_selesai.after' => 'Jam Selesai harus setelah Jam Mulai',
         ]);
-
-        $jadwalPerWeekCount = Jadwal::where('id_dokter', $dokterId)->count();
-
-        if ($jadwalPerWeekCount > 0) {
-            return redirect()->route('jadwalpraktik')->with('failed', 'Dokter hanya dapat memiliki satu jadwal per minggu.');
-        }
 
         $overlapCount = Jadwal::where(function ($query) use ($startTime, $endTime, $dokterId, $hari, $id) {
             $query->where('id_dokter', $dokterId)
