@@ -9,11 +9,14 @@ class Jadwal extends Model
 {
     use HasFactory;
 
+    protected $table = 'jadwal_periksa';
+    public $timestamps = false;
     protected $fillable = [
         'id_dokter',
         'hari',
         'jam_mulai',
         'jam_selesai',
+        'aktif',
     ];
 
     public function dokter()

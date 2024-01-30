@@ -7,14 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Periksa extends Model
 {
-    
+
     use HasFactory;
-    
+
+    protected $table = 'periksa';
+    public $timestamps = false;
     protected $fillable = [
         'id_daftar_poli',
         'tgl_periksa',
         'catatan',
-        'biaya',
+        'biaya_periksa',
     ];
 
     public function daftarPoli()

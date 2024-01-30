@@ -9,6 +9,8 @@ class DetailPeriksa extends Model
 {
     use HasFactory;
 
+    protected $table = 'detail_periksa';
+    public $timestamps = false;
     protected $fillable = [
         'id_dokter',
         'id_periksa',

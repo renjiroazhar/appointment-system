@@ -83,26 +83,26 @@ class PeriksaController extends Controller
             [
                 'id_daftar_poli' => 'required',
                 'tgl_periksa' => 'required',
-                'biaya' => 'required|numeric|digits_between:1,10',
+                'biaya_periksa' => 'required|numeric|digits_between:1,10',
                 'catatan' => 'required',
             ],
             [
                 'id_daftar_poli.required' => 'ID Daftar Poli tidak boleh kosong',
                 'tgl_periksa.required' => 'Tanggal Periksa tidak boleh kosong',
-                'biaya.required' => 'Biaya tidak boleh kosong',
-                'biaya.numeric' => 'Biaya harus berupa angka',
-                'biaya.digits_between' => 'Biaya maksimal 10 digit',
+                'biaya_periksa.required' => 'Biaya tidak boleh kosong',
+                'biaya_periksa.numeric' => 'Biaya harus berupa angka',
+                'biaya_periksa.digits_between' => 'Biaya maksimal 10 digit',
                 'catatan.required' => 'Catatan tidak boleh kosong',
             ]
         );
         // Tambah Jasa Dokter
-        $totalBiaya = 150000 + $request->biaya;
+        $totalBiaya = 150000 + $request->biaya_periksa;
 
         $daftarPoli = DaftarPoli::find($request->id_daftar_poli);
         $periksa = Periksa::create([
             'id_daftar_poli' => $daftarPoli->id,
             'tgl_periksa' => $request->tgl_periksa,
-            'biaya' => $totalBiaya,
+            'biaya_periksa' => $totalBiaya,
             'catatan' => $request->catatan,
         ]);
         $periksa->save();

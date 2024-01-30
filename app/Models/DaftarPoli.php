@@ -9,11 +9,14 @@ class DaftarPoli extends Model
 {
     use HasFactory;
 
+    protected $table = 'daftar_poli';
+    public $timestamps = false;
     protected $fillable = [
         'id_pasien',
         'id_jadwal',
         'keluhan',
         'no_antrian',
+        'status_periksa',
     ];
 
     public static function generateNoAntrian()
@@ -34,8 +37,7 @@ class DaftarPoli extends Model
         return $this->belongsTo(Jadwal::class, 'id_jadwal');
     }
     public function periksa()
-{
-    return $this->hasOne(Periksa::class, 'id_daftar_poli', 'id');
-}
-
+    {
+        return $this->hasOne(Periksa::class, 'id_daftar_poli', 'id');
+    }
 }

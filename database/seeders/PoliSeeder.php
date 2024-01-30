@@ -14,26 +14,26 @@ class PoliSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('polis')->insert([
+        DB::table('poli')->insert([
             [
                 'nama_poli' => 'Umum',
                 'keterangan' => 'Poli Umum',
-                'created_at' => now()
+                // 'created_at' => now()
             ],
             [
                 'nama_poli' => 'Gigi',
                 'keterangan' => 'Poli Gigi',
-                'created_at' => now()
+                // 'created_at' => now()
             ],
             [
                 'nama_poli' => 'Anak',
                 'keterangan' => 'Poli Anak',
-                'created_at' => now()
+                // 'created_at' => now()
             ],
             [
                 'nama_poli' => 'Kandungan',
                 'deskripsi' => 'Poli Kandungan',
-                'created_at' => now()
+                // 'created_at' => now()
             ],
 
         ]);

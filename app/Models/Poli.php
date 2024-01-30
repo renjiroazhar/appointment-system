@@ -9,6 +9,8 @@ class Poli extends Model
 {
     use HasFactory;
 
+    protected $table = 'poli';
+    public $timestamps = false;
     protected $fillable = [
         'nama_poli',
         'keterangan',
@@ -18,7 +20,7 @@ class Poli extends Model
     {
         return $this->belongsTo(Dokter::class);
     }
-    public function jadwals()
+    public function jadwal_periksa()
     {
         return $this->hasMany(Jadwal::class, 'id_poli');
     }

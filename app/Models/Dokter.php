@@ -9,6 +9,8 @@ class Dokter extends Authenticatable
 {
     use HasFactory;
 
+    protected $table = 'dokter';
+    public $timestamps = false;
     protected $fillable = [
         'nama',
         'alamat',

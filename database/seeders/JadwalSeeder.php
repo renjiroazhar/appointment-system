@@ -14,27 +14,30 @@ class JadwalSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('jadwals')->insert([
+        DB::table('jadwal_periksa')->insert([
             [
                 'hari' => 'Senin',
                 'jam_mulai' => '08:00',
                 'jam_selesai' => '12:00',
                 'id_dokter' => 1,
-                'created_at' => now()
+                'aktif' => 'Y',
+                // 'created_at' => now()
             ],
             [
                 'hari' => 'Selasa',
                 'jam_mulai' => '08:00',
                 'jam_selesai' => '12:00',
                 'id_dokter' => 2,
-                'created_at' => now()
+                'aktif' => 'Y',
+                // 'created_at' => now()
             ],
             [
                 'hari' => 'Rabu',
                 'jam_mulai' => '08:00',
                 'jam_selesai' => '12:00',
                 'id_dokter' => 3,
-                'created_at' => now()
+                'aktif' => 'Y',
+                // 'created_at' => now()
             ],
         ]);
     }

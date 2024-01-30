@@ -14,14 +14,14 @@ class DokterSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('dokters')->insert([
+        DB::table('dokter')->insert([
             [
                 'nama' => 'Dr. Andi',
                 'alamat' => 'Jl. Raya No. 1',
                 'no_hp' => '081234567890',
                 'password' => bcrypt('dokter'),
                 'id_poli' => 1,
-                'created_at' => now()
+                // 'created_at' => now()
             ],
             [
                 'nama' => 'Dr. Budi',
@@ -29,7 +29,7 @@ class DokterSeeder extends Seeder
                 'no_hp' => '081234567891',
                 'password' => bcrypt('dokter'),
                 'id_poli' => 2,
-                'created_at' => now()
+                // 'created_at' => now()
             ],
             [
                 'nama' => 'Dr. Caca',
@@ -37,7 +37,7 @@ class DokterSeeder extends Seeder
                 'no_hp' => '081234567892',
                 'password' => bcrypt('dokter'),
                 'id_poli' => 3,
-                'created_at' => now()
+                // 'created_at' => now()
             ],
 
         ]);

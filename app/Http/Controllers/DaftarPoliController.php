@@ -18,25 +18,24 @@ class DaftarPoliController extends Controller
     public function index()
     {
         $polis = Poli::all();
-        $jadwals = Jadwal::all();
+        $jadwal_periksa = Jadwal::all();
 
         $no_ktp = session('no_ktp');
 
         $pasien = Pasien::where('no_ktp', $no_ktp)->first();
 
-        return view('pasien.daftar-poli', compact('polis', 'jadwals', 'pasien'));
-
+        return view('pasien.daftar-poli', compact('polis', 'jadwal_periksa', 'pasien'));
     }
 
     public function getJadwals(Request $request)
     {
         $poliId = $request->id_poli;
 
-        $jadwals = Jadwal::whereHas('dokter', function ($q) use ($poliId) {
+        $jadwal_periksa = Jadwal::whereHas('dokter', function ($q) use ($poliId) {
             $q->where('id_poli', $poliId);
         })->with('dokter')->get();
 
-        return $jadwals;
+        return $jadwal_periksa;
     }
 
 

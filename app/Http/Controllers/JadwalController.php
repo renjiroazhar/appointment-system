@@ -20,7 +20,7 @@ class JadwalController extends Controller
         $dokterNoHp = session('no_hp');
 
         $dokter = Dokter::where('no_hp', $dokterNoHp)->first();
-        $jadwal = Jadwal::where('id_dokter', $dokter->id)->first();
+        $jadwal = Jadwal::where('id_dokter', $dokter->id)->get();
 
         return view('dokter.jadwal-praktik', compact('jadwal', 'dokter'));
     }
@@ -46,11 +46,12 @@ class JadwalController extends Controller
         $dokterNoHp = session('no_hp');
 
         $dokter = Dokter::where('no_hp', $dokterNoHp)->first();
-        
+
         $startTime = Carbon::parse($request->jam_mulai)->format('H:i:s');
         $endTime = Carbon::parse($request->jam_selesai)->format('H:i:s');
         $dokterId = $request->id_dokter;
         $hari = $request->hari;
+        $aktif = 'T';
 
         if (strtotime($startTime) > strtotime($endTime)) {
             return redirect()->route('jadwalpraktik')->with('failed', 'Jam mulai tidak bisa lebih kecil dari jam selesai.');
@@ -82,12 +83,12 @@ class JadwalController extends Controller
                         $qq->whereBetween('jam_mulai', [$startTime, $endTime])
                             ->orWhereBetween('jam_selesai', [$startTime, $endTime]);
                     })
-                    ->orWhere(function ($qq) use ($startTime, $endTime) {
-                        $qq->where('jam_mulai', '<', $endTime)
-                            ->where('jam_selesai', '>', $startTime);
-                    });
+                        ->orWhere(function ($qq) use ($startTime, $endTime) {
+                            $qq->where('jam_mulai', '<', $endTime)
+                                ->where('jam_selesai', '>', $startTime);
+                        });
                 });
-        })->count();            
+        })->count();
 
         if ($overlapCount > 0) {
             return redirect()->route('jadwalpraktik')->with('failed', 'Jadwal tumpang tindih dengan jadwal dokter lain.');
@@ -99,6 +100,7 @@ class JadwalController extends Controller
             'hari' => $hari,
             'jam_mulai' => $startTime,
             'jam_selesai' => $endTime,
+            'aktif' => $aktif,
         ]);
 
         $jadwal->dokter()->associate($dokter);
@@ -142,6 +144,7 @@ class JadwalController extends Controller
         $endTime = Carbon::parse($request->jam_selesai)->format('H:i:s');
         $dokterId = $request->id_dokter;
         $hari = $request->hari;
+        $aktif = $request->aktif;
 
         if (strtotime($startTime) > strtotime($endTime)) {
             return redirect()->route('jadwalpraktik')->with('failed', 'Jam mulai tidak bisa lebih kecil dari jam selesai.');
@@ -152,6 +155,7 @@ class JadwalController extends Controller
             'hari' => 'required',
             'jam_mulai' => 'required|date_format:H:i',
             'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+            'aktif' => 'required',
         ], [
             'id_dokter.required' => 'Dokter tidak boleh kosong',
             'hari.required' => 'Hari tidak boleh kosong',
@@ -160,6 +164,7 @@ class JadwalController extends Controller
             'jam_selesai.required' => 'Jam Selesai tidak boleh kosong',
             'jam_selesai.date_format' => 'Format Jam Selesai tidak valid',
             'jam_selesai.after' => 'Jam Selesai harus setelah Jam Mulai',
+            'aktif.required' => 'Status tidak boleh kosong',
         ]);
 
         $overlapCount = Jadwal::where(function ($query) use ($startTime, $endTime, $dokterId, $hari, $id) {
@@ -179,12 +184,18 @@ class JadwalController extends Controller
         }
 
         $dokter = Dokter::find($dokterId);
+        $activeSchedule = Jadwal::where('id_dokter', $dokter->id)->where('aktif', 'Y')->first();
+        $activeSchedule->update([
+            'aktif' => 'T',
+        ]);
+
         $jadwal = Jadwal::find($id);
         $jadwal->update([
             'id_dokter' => $dokter->id,
             'hari' => $hari,
             'jam_mulai' => $startTime,
             'jam_selesai' => $endTime,
+            'aktif' => $aktif,
         ]);
 
         return redirect()->route('jadwalpraktik')->with('success', 'Jadwal berhasil diubah');

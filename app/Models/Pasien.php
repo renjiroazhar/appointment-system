@@ -10,6 +10,8 @@ class Pasien extends Authenticatable
 {
     use HasFactory;
 
+    protected $table = 'pasien';
+    public $timestamps = false;
     protected $fillable = [
         'nama',
         'alamat',
@@ -20,7 +22,7 @@ class Pasien extends Authenticatable
 
     public static function generateNoRM()
     {
-        $dateCode = now()->format('ym');
+        $dateCode = now()->format('Ym');
         $lastPatient = self::whereYear('created_at', now()->year)
             ->whereMonth('created_at', now()->month)
             ->count();
